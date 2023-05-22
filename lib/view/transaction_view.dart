@@ -1,16 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
-import 'package:provider/provider.dart';
 import 'package:transactions/repository/transaction_repository.dart';
 import 'package:transactions/resource/app_colors.dart';
 import 'package:transactions/resource/component/content.dart';
 import 'package:transactions/resource/component/myappbar.dart';
 import 'package:transactions/resource/component/transaction_tile.dart';
 import 'package:transactions/utils/sizeconfig.dart';
-import 'package:transactions/view_model/transaction_view_model.dart';
 
-import '../data/response/status.dart';
 
 class TransactionView extends StatelessWidget {
   TransactionView({super.key});
