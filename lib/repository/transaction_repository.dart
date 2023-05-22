@@ -3,17 +3,21 @@ import 'package:transactions/data/network/network_api_services.dart';
 import 'package:transactions/model/transaction_model/transaction_model.dart';
 import '../resource/app_urls.dart';
 
-class TransactionRepository {
-  BaseApiServices _apiServices = NetworkApiService();
+List<TransactionModel> transactionList = [];
 
-  Future<dynamic> transactionApi() async {
+class TransactionRepository {
+  final BaseApiServices _apiServices = NetworkApiService();
+
+  Future<List<TransactionModel>> fetchTransactionList() async {
     try {
       dynamic response =
           await _apiServices.getGetApiResponse(AppUrl.transactionUrl);
-      List<TransactionModel> transactionList = [];
+      transactionList.clear();
+
       for (var item in response) {
         transactionList.add(TransactionModel.fromJson(item));
       }
+      transactionList.sort((a, b) => b.date!.compareTo(a.date!));
       return transactionList;
     } catch (e) {
       throw e;

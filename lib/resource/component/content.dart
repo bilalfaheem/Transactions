@@ -8,7 +8,7 @@ class Content extends StatelessWidget {
   TextAlign? alignment;
 
   Content(
-      {required this.data,
+      {super.key, required this.data,
       required this.size,
       this.color,
       this.weight,

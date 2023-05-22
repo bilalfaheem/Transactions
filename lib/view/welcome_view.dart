@@ -4,6 +4,7 @@ import 'package:transactions/resource/app_images.dart';
 import 'package:transactions/resource/component/content.dart';
 import 'package:transactions/utils/sizeconfig.dart';
 import 'package:transactions/view/transaction_view.dart';
+import 'package:transactions/view/transaction_view2.dart';
 
 class WelcomeView extends StatelessWidget {
   const WelcomeView({super.key});

@@ -1,14 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
+import 'package:provider/provider.dart';
+import 'package:transactions/repository/transaction_repository.dart';
 import 'package:transactions/resource/app_colors.dart';
 import 'package:transactions/resource/component/content.dart';
 import 'package:transactions/resource/component/myappbar.dart';
 import 'package:transactions/resource/component/transaction_tile.dart';
 import 'package:transactions/utils/sizeconfig.dart';
+import 'package:transactions/view_model/transaction_view_model.dart';
+
+import '../data/response/status.dart';
 
 class TransactionView extends StatelessWidget {
-  const TransactionView({super.key});
+  TransactionView({super.key});
+
+  final transactionRepo = TransactionRepository();
 
   @override
   Widget build(BuildContext context) {
@@ -34,8 +41,48 @@ class TransactionView extends StatelessWidget {
             SizedBox(
               height: sizedConfig.height(0.01),
             ),
-            TransactionTile(),
-            TransactionTile()
+            FutureBuilder(
+                future: transactionRepo.fetchTransactionList(),
+                builder: (BuildContext context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return Expanded(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        mainAxisSize: MainAxisSize.max,
+                        children: [
+                          Center(
+                            child: CircularProgressIndicator(
+                              strokeWidth: 2,
+                              color: AppColors.primaryColor,
+                            ),
+                          ),
+                        ],
+                      ),
+                    );
+                  } else if (snapshot.hasError) {
+                    return Center(
+                      child: Content(data: "Error ${snapshot.error}", size: 12),
+                    );
+                  } else if (snapshot.hasData) {
+                    return Expanded(
+                      child: ListView.builder(
+                          shrinkWrap: true,
+                          itemCount: transactionList.length,
+                          itemBuilder: (context, index) {
+                            final iteration = transactionList[index];
+                            return TransactionTile(
+                              amount: iteration.amount.toString(),
+                              currency: iteration.currency.toString(),
+                              type: iteration.type.toString(),
+                              date: iteration.date.toString(),
+                              description: iteration.description.toString(),
+                            );
+                          }),
+                    );
+                  } else {
+                    return Content(data: "No Data", size: 12);
+                  }
+                }),
           ],
         ),
       ),
