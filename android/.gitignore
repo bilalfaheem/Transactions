@@ -5,10 +5,6 @@ gradle-wrapper.jar
 /gradlew.bat
 /local.properties
 GeneratedPluginRegistrant.java
-/transaction_view_model.dart
-/transaction_view_model2.dart
-/transaction_view2.dart
-/D:/Code/transactions/lib/view_model/*
 
 # Remember to never publicly share your keystore.
 # See https://flutter.dev/docs/deployment/android#reference-the-keystore-from-the-app
